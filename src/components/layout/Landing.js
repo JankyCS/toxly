@@ -18,7 +18,17 @@ class Landing extends Component {
                 <br/>
                 Start seeing your ingredients today idk be healthier
               </p>
-              
+              <Link
+                to="/upload"
+                style={{
+                  width: "140px",
+                  borderRadius: "3px",
+                  marginBottom:20
+                }}
+                className="btn btn-raised btn-primary"
+              >
+                Get Started
+              </Link>
             </div>
             <div className="col-lg-7 align-middle">
               <img src="https://thumbs.dreamstime.com/b/mockup-laptop-tablet-pc-mobile-phone-blank-screen-responsive-web-design-devices-consisting-adaptive-presentation-176038032.jpg" alt="mockup" style={
