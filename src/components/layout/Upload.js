@@ -6,7 +6,8 @@ class Upload extends Component {
   constructor() {
     super();
     this.state = {
-        image:null
+        image:null,
+        ingredients:[]
     };
 
   }
@@ -20,7 +21,9 @@ class Upload extends Component {
         }
     };
 
-
+    goToIng = () => {
+        
+    }
   render() {
     return (
       <div className="container-fluid poppin"  style={{marginTop:"50px",maxWidth:"750px",width:"100%"}}>
@@ -28,9 +31,22 @@ class Upload extends Component {
           <div className="col-sm-12">
             <div>
               <h3>Upload a Picture of the Ingredients List</h3>
-              <input type="file" name="myImage" onChange={this.onImageChange} /><br/>
-              <img src={this.state.image} alt=""  height="200px"/>
+              <input type="file" name="myImage" onChange={this.onImageChange} accept="image/*" /><br/><br/>
+              {this.state.image ? <img src={this.state.image} alt=""  height="200px"/>: null}
             </div>
+            <button
+                style={{
+                //width: "100px",
+                borderRadius: "3px",
+                marginTop:"15px"
+                }}
+                type="submit"
+                className="btn btn-primary"
+                disabled={this.state.image ? false : true}
+                onClick={this.goToIng}
+            >
+                Check Out The Ingredients!
+            </button>
           </div>
         </div>
       </div>
