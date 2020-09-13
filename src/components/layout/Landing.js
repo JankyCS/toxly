@@ -16,7 +16,7 @@ class Landing extends Component {
               <h1 style={{fontSize:45,fontWeight:700}}>Your Product Toxicity Report.</h1>
               <p>
                 <br/>
-                <b>TOX.LY</b> is your personal chemical safety-report generator. Figure out what's really in your cosmetic products, and make more informed decisions.
+                <b>TOX.LY</b> is your personal chemical safety-report generator. Take advantage of modern A.I. and machine learning technologies to figure out what's really in your cosmetic products, and make more informed decisions. 
                 <br/><br/>
                 See your personal care products in a new light. Start buying healthier.
               </p>

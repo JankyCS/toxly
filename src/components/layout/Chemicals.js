@@ -158,7 +158,7 @@ class Chemicals extends Component {
         }, 6000);
       }
       else {
-        this.setState({loading:false})
+        this.setState({loading:false,ingredientsDetails:[],ingredients:[]})
       }
       
   }
