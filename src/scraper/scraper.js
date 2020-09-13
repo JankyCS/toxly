@@ -29,7 +29,15 @@ function getInfo(substance)
 		const html = response.data;
 		const $ = cheerio.load(html);
 		
-		const linkElement=$('.product-listings').find('a');
+		var linkElement=$('.product-listings').find('a');
+		if(linkElement.length==0) {return null;}
+		linkElement.each(function(index,element){
+			if ($(element).text().toLowerCase() == substance.toLowerCase())
+			{
+				linkElement = $(element);
+			}
+		});
+
 		const link = linkElement.attr('href');
 		substurl=domain+link;
 		//console.log(substurl);
@@ -90,5 +98,5 @@ function getInfo(substance)
 	.catch(console.error);
 }
 
-getInfo( 'water').then(ans=>
-{console.log("score: " + ans.score+". # of concerns: " + ans.concerns.length + ". URL: " + ans.substurl)});
+getInfo( 'sodium Benzoate').then(ans=>
+{if(ans==null){console.log("null!");}else {console.log("score: " + ans.score+". # of concerns: " + ans.concerns.length + ". URL: " + ans.substurl)}});
