@@ -24,7 +24,7 @@ function IngredientCard(props) {
                             Human Toxicity
                         </Card.Subtitle>
                         <Card.Text>
-                            {concerns}
+                            {/* {concerns} */}
                         </Card.Text>
                         <hr color={ (score > 7) ? "#8a8a8a" : 
                                     ((score > 3) ? "#c2c2c2" : "f0f0f0")}/>

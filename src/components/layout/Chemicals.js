@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import IngredientCard from "../IngredientCard"
 import imageToBase64 from "image-to-base64"
+<<<<<<< HEAD
 import {Card, Container, Image} from 'react-bootstrap'
+=======
+import Upload from "./Upload"
+>>>>>>> f887aef96b85343a386f3a7957d98f3f747fc76c
 
 class Chemicals extends Component {
   constructor(props){
@@ -43,6 +47,7 @@ class Chemicals extends Component {
 
   
     onImageChange = async event => {
+      this.setState({loading:true})
       if (event.target.files && event.target.files[0]) {
         let img = await event.target.files[0];
         var url=await URL.createObjectURL(img);
@@ -65,7 +70,7 @@ class Chemicals extends Component {
     };
 
     goToIng = async () => {
-      this.setState({loading:true})
+      this.setState({loading:true,ingredients:null,ingredientsDetails:[]})
       const body = {
         requests:[
           {
@@ -98,7 +103,8 @@ class Chemicals extends Component {
       })
       //console.log("i is"+JSON.stringify(i))
       // this.setState({word:JSON.stringify(i),loading:false})
-      var allText = i.responses[0].textAnnotations[0].description
+      if(i.responses){
+        var allText = i.responses[0].textAnnotations[0].description
       allText = allText.toLowerCase()
       var i = allText.indexOf("ingr")
       allText=allText.substring(i)
@@ -138,7 +144,7 @@ class Chemicals extends Component {
             }
           }
         )
-        if(e&&e.score>1){
+        if(e&&e.score>2){
            console.log(e)
             e.name=element
             details.push(e)
@@ -153,12 +159,24 @@ class Chemicals extends Component {
        setTimeout(() => {
          this.setState({loading:false})
       }, 4000);
+      }
+      
   }
 
   render() {
-    return !this.state.loading ? (
+
+    if(this.state.loading){
+      return (
+        <div className="align-middle" style={{padding:"40vh 0px"}}><div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div><br/>
+        Loading...</div>
+      )
+    }
+    return true ? (
       <div className="container-fluid">
         <div  className="row" >
+<<<<<<< HEAD
           <Card style={{minHeight: 320}} className="col-md-4 overflow-auto" bg="dark" text = "light">
             <Card.Header as="h5">
                 Photo Section
@@ -172,18 +190,57 @@ class Chemicals extends Component {
             {/* <p>{this.state.ingredients?this.state.ingredients.toString():null}</p> */}
           </Card>
           <div className="col-md-8 overflow-auto text-left" style={{height:"100vh"}}>
+=======
+          <div style={{minHeight: 320}} className="col-md-4 overflow-auto">
+            {/* <h1 style={{marginTop:15}}>
+                Photo Section
+            </h1> */}
+            <div className="align-middle border align-middle text-center" style={{margin:"5vh 5px",height:"90vh",display:"flex",flexWrap: "wrap"}}>
+              <div className="align-middle " style={{marginTop: "auto",marginBottom: "auto",marginLeft:"20px",marginRight:"20px"}}>
+                <h6>Upload a Picture of the Ingredients List</h6>
+                <input type="file" name="myImage" onChange={this.onImageChange} accept="image/*" /><br/><br/>
+                {this.state.image ? <img src={this.state.image} alt=""  width="100%" style={{borderRadius: "20px"}}/>: null}
+              </div>
+            </div>
+            {/* <p>{this.state.ingredients?this.state.ingredients.toString():null}</p> */}
+          </div>
+          <div className="col-md-8 overflow-auto text-left" style={{padding:"5vh 0", height:"100vh"}}>
+>>>>>>> f887aef96b85343a386f3a7957d98f3f747fc76c
             <h1 style={{marginTop:15}}>
-                Chemicals Section
+                Dangerous Chemicals
             </h1>
             {/* {this.state.ingredientsDetails.toString()} */}
-            {this.state.ingredientsDetails && this.state.ingredientsDetails.length>0 ? <div className="card-columns">{this.state.ingredientsDetails.map((ingredient,i) => <IngredientCard key={i} ingredient={ingredient}/>)}</div>:<p>None</p>}
+            {this.state.ingredientsDetails && this.state.ingredientsDetails.length>0 ? <div className="card-columns">{this.state.ingredientsDetails.map((ingredient,i) => <IngredientCard key={i} ingredient={ingredient}/>)}</div>:<p>No chemicals found!</p>}
           </div>
         </div>
       </div>
-    ): <div className="align-middle" style={{paddingTop:"40vh"}}><div className="spinner-border" role="status">
-      <span className="sr-only">Loading...</span>
-    </div><br/>
-    Loading...</div>;
+    ): (
+      <div className="container-fluid poppin"  style={{marginTop:"50px",maxWidth:"750px",width:"100%"}}>
+        <div className="row">
+          <div className="col-sm-12">
+            <div>
+              <h3>Upload a Picture of the Ingredients List</h3>
+              <input type="file" name="myImage" onChange={this.onImageChange} accept="image/*" /><br/><br/>
+              {this.state.image ? <img src={this.state.image} alt=""  height="200px"/>: null}
+            </div>
+            {/* <button
+                style={{
+                //width: "100px",
+                borderRadius: "3px",
+                marginTop:"15px"
+                }}
+                type="submit"
+                className="btn btn-primary"
+               disabled={this.state.image ? false : true}
+                onClick={this.goToIng}
+            >
+                Check Out The Ingredients!
+            </button> */}
+            <p>{this.state.word}</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
