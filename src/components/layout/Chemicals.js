@@ -14,16 +14,17 @@ class Chemicals extends Component {
           ecoToxicology:"Not suspected to be an environmental toxin"
         },
         {
-          name: "Water",
-          score:1,
-          organToxicology:"Classified as not expected to be potentially toxic or harmful",
-          ecoToxicology:"Not suspected to be an environmental toxin"
-        }],
-        image:null,
-        img64:null,
-        ingredients:[],
-        word:"",
-        loading:false
+          name: "Palm Oil",
+          score:3,
+          organToxicology:"Not Bad",
+          ecoToxicology:"Bad For environment"
+        },
+        {
+          name: "Cyanide",
+          score:5,
+          organToxicology:"Will kill you if ingested",
+          ecoToxicology:"Affects fishies oh NO"
+        }]
     }
   }
 
