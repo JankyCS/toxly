@@ -67,6 +67,7 @@ function getInfo(substance)
 			//console.log(scoreMax+" "+scoreMin);
 
 
+				/*
 		$("html").find('.chemical-concern-table').each(
 			function(index, element) {
 				if (index > 0)
@@ -79,14 +80,24 @@ function getInfo(substance)
 						})
 				}
 
-
-				/*
-				console.log("yeet");
-				concerns.push(element.text());
-				console.log(element.text());
-				*/
 			}
 		);
+		*/
+		$("html").find('.concerns-block').each(
+			function(index,element){
+					var category = $(element).parent(/*'collapsable-block'*/).find('.concerns-header > h2').text();
+					console.log(category);
+					var currentStrings=[];
+					concerns.push({category, strings: currentStrings});
+					$(element).find('tbody > tr > td:first-child').each(
+						function (index2, element2)
+						{
+							currentStrings.push($(element2).text());
+							//console.log($(element2).text());
+						})
+			});
+				console.log(concerns);
+
 				//console.log(concerns.length);
 
 	return {substurl, score: (scoreMax+scoreMin)/2, concerns}
