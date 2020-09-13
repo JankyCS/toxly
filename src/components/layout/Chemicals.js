@@ -154,35 +154,44 @@ class Chemicals extends Component {
       }, 4000);
   }
 
+  _handleClick = (e) => {
+    var inputField = this.refs.fileField;
+    inputField.click()
+  }
+
   render() {
     return !this.state.loading ? (
       <div className="container-fluid">
-        <div  className="row" >
-          <Card style={{minHeight: 320}} className="col-md-4 overflow-auto" bg="dark" text = "light">
+        <div  className="row " style={{padding:0}} >
+          <Card style={{height: "100vh", borderRadius:0,cursor:"pointer"}} className="overflow-auto col-md-4 no-gutters" bg="dark" text = "light"  onClick={this._handleClick}>
             <Card.Header as="h5">
-                Photo Section
+                Upload a Photo
             </Card.Header>  
-            <Card.Body style ={{marginTop:"40vh"}}>
-                <Image src = "https://www.iconfinder.com/data/icons/set-app-incredibles/24/Image-01-512.png" style={{filter:"invert(50%)",width:"30px", height:"auto"}} />
-                <Card.Text style={{filter:"invert(50%)"}}> Click in this box to add a photo!</Card.Text>
+            <Card.Body className="align-items-center d-flex justify-content-center" height="auto" style ={{flexDirection:"column", marginTop: "auto",marginBottom: "auto"}}>
+                {this.state.image ? <img src={this.state.image} alt=""  width="100%" style={{borderRadius: "20px"}}/>: <Image className="" src = "https://www.iconfinder.com/data/icons/set-app-incredibles/24/Image-01-512.png" style={{filter:"invert(50%)",width:"30px", height:"auto"}} />}
+                <Card.Text style={{filter:"invert(50%)"}}> Click to add a photo!</Card.Text>
             </Card.Body>
-            <input type="file" ref="uploadPhoto" name="myImage" onChange={this.onImageChange} accept="image/*" style = {{display:"none"}}/>
-            {this.state.image ? <img src={this.state.image} alt=""  width="100%"/>: null}
+            <input type="file" ref="fileField" name="myImage" onChange={this.onImageChange} accept="image/*" style = {{display:"none"}}/>
             {/* <p>{this.state.ingredients?this.state.ingredients.toString():null}</p> */}
           </Card>
-          <Card className="col-md-8" style={{height:"100vh"}} bg="light">
-            <Card.Header style={{width:"100%"}} as = "h5">
+          <Card className="col-md-8 overflow-auto  no-gutters" style={{height:"100vh"}} bg="light">
+            <Card.Header as = "h5">
                 Chemicals Section
             </Card.Header>
             {/* {this.state.ingredientsDetails.toString()} */}
-            {this.state.ingredientsDetails && this.state.ingredientsDetails.length>0 ? <div className="card-columns">{this.state.ingredientsDetails.map((ingredient,i) => <IngredientCard key={i} ingredient={ingredient}/>)}</div>:<p>None</p>}
+            {this.state.ingredientsDetails && this.state.ingredientsDetails.length>0 ? <div className="card-columns">{this.state.ingredientsDetails.map((ingredient,i) => <IngredientCard key={i} ingredient={ingredient}/>)}</div>:
+            <Card.Body className="align-items-center d-flex justify-content-center" height="auto" style ={{flexDirection:"column", marginTop: "auto",marginBottom: "auto"}}>
+              <Card.Text>
+                Add a photo of an item to find out about the possible toxic compounds in it.
+              </Card.Text>
+            </Card.Body>}
           </Card>
         </div>
       </div>
     ): <div className="align-middle" style={{paddingTop:"40vh"}}><div className="spinner-border" role="status">
       <span className="sr-only">Loading...</span>
     </div><br/>
-    Loading...</div>;
+    Loading...</div>
   }
 }
 
