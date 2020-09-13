@@ -9,7 +9,6 @@ import {
 import Landing from "./components/layout/Landing";
 import Upload from "./components/layout/Upload";
 import PageNotFound from "./components/layout/PageNotFound";
-
 import Chemicals from "./components/layout/Chemicals";
 
 function App() {
