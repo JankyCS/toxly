@@ -163,11 +163,11 @@ class Chemicals extends Component {
     return !this.state.loading ? (
       <div className="container-fluid">
         <div  className="row " style={{padding:0}} >
-          <div className="col-md-4 no-gutters">
+          <div className="col-md-4 no-gutters bg-dark">
           {/* <h1 style={{marginTop:15}}>
                 Photo Section
             </h1> */}
-            <div className="align-middle border align-middle text-center" style={{margin:"5vh 5px",height:"90vh",display:"flex",flexWrap: "wrap"}} onClick={this._handleClick}>
+            <div className="align-middle align-middle text-center" style={{height:"100vh",display:"flex",flexWrap: "wrap"}} onClick={this._handleClick}>
               <div className="align-middle " style={{marginTop: "auto",marginBottom: "auto",margin:"auto", textAlign:"center"}} >
                 {!this.state.image ?<Image src = "https://www.iconfinder.com/data/icons/set-app-incredibles/24/Image-01-512.png" style={{filter:"invert(50%)",width:"30px", height:"auto"}} />:null}
                 {!this.state.image ?<Card.Text style={{filter:"invert(50%)"}}> Click in this box to add a photo!</Card.Text>:null}
@@ -177,18 +177,25 @@ class Chemicals extends Component {
             </div>
           </div>
           <div className="col-md-8 overflow-auto text-left no-gutters" style={{height:"100vh"}}>
-            <h1 style={{marginTop:15}}>
-                Chemicals Section
-            </h1>
+            <Card bg="light" height="100vh" >
+            <Card.Header as = "h5">
+                Dangerous Chemicals
+            </Card.Header>
             {/* {this.state.ingredientsDetails.toString()} */}
-            {this.state.ingredientsDetails && this.state.ingredientsDetails.length>0 ? <div className="card-columns">{this.state.ingredientsDetails.map((ingredient,i) => <IngredientCard key={i} ingredient={ingredient}/>)}</div>:<p>None</p>}
+            {this.state.ingredientsDetails && this.state.ingredientsDetails.length>0 ? <div className="card-columns" style={{padding:"20px"}}>{this.state.ingredientsDetails.map((ingredient,i) => <IngredientCard key={i} ingredient={ingredient}/>)}</div>:
+            <Card.Body className="align-items-center d-flex justify-content-center" height="100%" style ={{flexDirection:"column", marginTop: "auto",marginBottom: "auto",padding:"20px"}}>
+              <Card.Text>
+                Add a photo of an item to find out about the possible toxic compounds in it.
+              </Card.Text>
+            </Card.Body>}
+          </Card>
           </div>
         </div>
       </div>
     ): <div className="align-middle" style={{paddingTop:"40vh"}}><div className="spinner-border" role="status">
       <span className="sr-only">Loading...</span>
     </div><br/>
-    Loading...</div>;
+    Loading...</div>
   }
 }
 
