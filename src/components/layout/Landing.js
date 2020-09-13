@@ -19,7 +19,7 @@ class Landing extends Component {
                 Start seeing your ingredients today idk be healthier
               </p>
               <Link
-                to="/upload"
+                to="/chemicals"
                 style={{
                   width: "140px",
                   borderRadius: "3px",

@@ -7,32 +7,37 @@ class Chemicals extends Component {
     super(props);
     this.state = {
         ingredients:null,
-        ingredientsDetails: [{
-          name: "Water",
-          score:1,
-          organToxicology:"Classified as not expected to be potentially toxic or harmful",
-          ecoToxicology:"Not suspected to be an environmental toxin"
-        },
-        {
-          name: "Palm Oil",
-          score:3,
-          organToxicology:"Not Bad",
-          ecoToxicology:"Bad For environment"
-        },
-        {
-          name: "Cyanide",
-          score:5,
-          organToxicology:"Will kill you if ingested",
-          ecoToxicology:"Affects fishies oh NO"
-        }]
+        ingredientsDetails:[],
+        image:null,
+        img64:null,
+        word:"",
+        loading:false
+        // ingredientsDetails: [{
+        //   name: "Water",
+        //   score:1,
+        //   organToxicology:"Classified as not expected to be potentially toxic or harmful",
+        //   ecoToxicology:"Not suspected to be an environmental toxin"
+        // },
+        // {
+        //   name: "Palm Oil",
+        //   score:3,
+        //   organToxicology:"Not Bad",
+        //   ecoToxicology:"Bad For environment"
+        // },
+        // {
+        //   name: "Cyanide",
+        //   score:5,
+        //   organToxicology:"Will kill you if ingested",
+        //   ecoToxicology:"Affects fishies oh NO"
+        // }]
     }
   }
 
   componentDidMount(){
     //Make the api call and then
-    this.setState(()=>{
-      return {ingredients:[null]}
-    })
+    // this.setState(()=>{
+    //   return {ingredients:[]}
+    // })
   }
 
   
@@ -50,7 +55,7 @@ class Chemicals extends Component {
         reader.onloadend = async () => {
           var base64data = reader.result;                
           //console.log(base64data);
-          console.log(base64data.substr(base64data.indexOf(',')+1))
+          //console.log(base64data.substr(base64data.indexOf(',')+1))
           var pic=base64data.substr(base64data.indexOf(',')+1)
           this.setState({img64:pic,image:url})
           this.goToIng();
@@ -76,7 +81,7 @@ class Chemicals extends Component {
         ]
       }
 
-      const requestOptions = {
+      var requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -86,18 +91,71 @@ class Chemicals extends Component {
       var i = await fetch('https://vision.googleapis.com/v1/images:annotate?key='+process.env.REACT_APP_API_KEY, requestOptions)
       .then(response => {
       const r = response.json()
-        console.log("R is "+JSON.stringify(r))
+        //console.log("R is "+JSON.stringify(r))
         //this.setState({word:JSON.stringify(r)})
         return r
       })
-      console.log("i is"+JSON.stringify(i))
-      this.setState({word:JSON.stringify(i),loading:false})
-      const allText = i.responses[0].textAnnotations[0].description
-      this.setState({word:allText,loading:false})
+      //console.log("i is"+JSON.stringify(i))
+      // this.setState({word:JSON.stringify(i),loading:false})
+      var allText = i.responses[0].textAnnotations[0].description
+      allText = allText.toLowerCase()
+      var i = allText.indexOf("ingr")
+      allText=allText.substring(i)
+      allText = allText.substring(allText.indexOf(" "), allText.indexOf("."))
+      allText = allText.replace("\n","")
+      allText = allText.replace("/",",")
+      allText = allText.replace(/\s*,\s*/g, ",");
+      var ingArr = allText.split(',');
+      this.setState({ingredients:ingArr})
+      var details = []
+      // requestOptions = {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({substance:"water"})
+      // }
+      // var t = await fetch("https://us-central1-toxly-289322.cloudfunctions.net/getInfo",requestOptions).then(
+      //   res=>{
+      //     const r = res.json()
+      //     return  r
+      //   }
+      // )
+      // console.log(t)
+      ingArr.forEach(async element => {
+        //console.log("poggers22")
+        requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({substance:element})
+        }
+        var e = await fetch("https://us-central1-toxly-289322.cloudfunctions.net/getInfo", requestOptions).then(
+          (res)=>{
+            if(!res.headers.get('content-type').startsWith('text')){
+              console.log("element before break"+element)
+              const r = res.json()
+              return r
+              // console.log(JSON.stringify(r))
+            }
+          }
+        )
+        if(e&&e.score>1){
+           console.log(e)
+            e.name=element
+            details.push(e)
+
+          this.setState({ingredientsDetails:details})
+        }
+       
+      });
+      
+
+      //console.log(details.toStrin)
+       setTimeout(() => {
+         this.setState({loading:false})
+      }, 4000);
   }
 
   render() {
-    return (
+    return !this.state.loading ? (
       <div className="container-fluid">
         <div  className="row" >
           <div style={{minHeight: 320}} className="col-md-4 overflow-auto">
@@ -109,17 +167,21 @@ class Chemicals extends Component {
               <input type="file" name="myImage" onChange={this.onImageChange} accept="image/*" /><br/><br/>
               {this.state.image ? <img src={this.state.image} alt=""  width="100%"/>: null}
             </div>
-            <p>{this.state.word}</p>
+            {/* <p>{this.state.ingredients?this.state.ingredients.toString():null}</p> */}
           </div>
-          <div className="col-md-8 overflow-auto text-left">
+          <div className="col-md-8 overflow-auto text-left" style={{height:"100vh"}}>
             <h1 style={{marginTop:15}}>
                 Chemicals Section
             </h1>
-            {this.state.ingredientsDetails.length>0 ? <div className="card-columns">{this.state.ingredientsDetails.map((ingredient,i) => <IngredientCard key={i} ingredient={ingredient}/>)}</div>:<p>None</p>}
+            {/* {this.state.ingredientsDetails.toString()} */}
+            {this.state.ingredientsDetails && this.state.ingredientsDetails.length>0 ? <div className="card-columns">{this.state.ingredientsDetails.map((ingredient,i) => <IngredientCard key={i} ingredient={ingredient}/>)}</div>:<p>None</p>}
           </div>
         </div>
       </div>
-    );
+    ): <div className="align-middle" style={{paddingTop:"40vh"}}><div className="spinner-border" role="status">
+      <span className="sr-only">Loading...</span>
+    </div><br/>
+    Loading...</div>;
   }
 }
 
