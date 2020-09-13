@@ -164,20 +164,17 @@ class Chemicals extends Component {
       <div className="container-fluid">
         <div  className="row " style={{padding:0}} >
           <div className="col-md-4 no-gutters">
-          <Card style={{height: "100%", borderRadius:0,cursor:"pointer"}} className="overflow-auto" bg="dark" text = "light"  onClick={this._handleClick}>
-            <Card.Header as="h5">
-                Upload a Photo
-            </Card.Header>  
-            <Card.Body height="auto"style ={{marginTop: "auto",marginBottom: "auto"}}>
-                {this.state.image ? <img src={this.state.image} alt=""  width="100%" style={{borderRadius: "20px"}}/>: <Image src = "https://www.iconfinder.com/data/icons/set-app-incredibles/24/Image-01-512.png" style={{filter:"invert(50%)",width:"30px", height:"auto"}} />}
-                
-                <Card.Text style={{filter:"invert(50%)"}}> Click to add a photo!</Card.Text>
-
-            
-            </Card.Body>
-            <input type="file" ref="fileField" name="myImage" onChange={this.onImageChange} accept="image/*" style = {{display:"none"}}/>
-            {/* <p>{this.state.ingredients?this.state.ingredients.toString():null}</p> */}
-          </Card>
+          {/* <h1 style={{marginTop:15}}>
+                Photo Section
+            </h1> */}
+            <div className="align-middle border align-middle text-center" style={{margin:"5vh 5px",height:"90vh",display:"flex",flexWrap: "wrap"}} onClick={this._handleClick}>
+              <div className="align-middle " style={{marginTop: "auto",marginBottom: "auto",margin:"auto", textAlign:"center"}} >
+                {!this.state.image ?<Image src = "https://www.iconfinder.com/data/icons/set-app-incredibles/24/Image-01-512.png" style={{filter:"invert(50%)",width:"30px", height:"auto"}} />:null}
+                {!this.state.image ?<Card.Text style={{filter:"invert(50%)"}}> Click in this box to add a photo!</Card.Text>:null}
+                <input type="file" ref="fileField" name="myImage" onChange={this.onImageChange} accept="image/*" style={{display:"none"}}/><br/><br/>
+                {this.state.image ? <img src={this.state.image} alt=""  width="80%" style={{maxHeight:"80%",borderRadius: "20px"}}/>: null}
+              </div>
+            </div>
           </div>
           <div className="col-md-8 overflow-auto text-left no-gutters" style={{height:"100vh"}}>
             <h1 style={{marginTop:15}}>
