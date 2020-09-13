@@ -5,7 +5,7 @@ import { Card, Badge, ListGroup} from 'react-bootstrap'
 //Ingredient Card
 function IngredientCard(props) {
     const { ingredient } = props
-    let { name, score, concerns } = ingredient
+    let { name, score, concerns, substurl } = ingredient
     var concernList = []
     concerns.forEach(element => {
         var cat = element.category.toLowerCase()
@@ -52,20 +52,7 @@ function IngredientCard(props) {
                     </div>
 
                 ))}
-                {/* <Card.Subtitle as="h6" className="mb-2">
-                    Human Toxicity
-                </Card.Subtitle>
-                <Card.Text>
-                    {concerns}
-                </Card.Text>
-                <hr color={ (score > 7) ? "#8a8a8a" : 
-                            ((score > 3) ? "#c2c2c2" : "f0f0f0")}/> */}
-                {/* <Card.Subtitle as="h6" className="mb-2">
-                    Environment Toxicity
-                </Card.Subtitle> */}
-                {/* <Card.Text>
-                    {ecoToxicology}
-                </Card.Text> */}
+                <a href={substurl} className="btn btn-primary" target="_blank" rel="noopener noreferrer">Read More</a>
             </Card.Body>
         </Card>
     )
