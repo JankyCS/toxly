@@ -5,11 +5,30 @@ import { Card, Badge, ListGroup} from 'react-bootstrap'
 //Ingredient Card
 function IngredientCard(props) {
     const { ingredient } = props
-    let { name, score, concerns } = ingredient
-
+    let { name, score, concerns, substurl } = ingredient
+    var concernList = []
+    concerns.forEach(element => {
+        var cat = element.category.toLowerCase()
+        if(cat==="data gaps"){
+            return
+        }
+        if(cat === "Organ system toxicity (non-reproductive)".toLowerCase()){
+            cat = "Organ system toxicity"
+        }
+        if(cat === "Enhanced skin absorption".toLowerCase()){
+            cat = "Skin Absorption"
+        }
+        if(cat === "Use restrictions".toLowerCase()){
+            return
+        }
+        concernList.push({
+            cat,
+            text:element.strings[0]
+        })
+    });
     return (
         <Card   bg={    (score > 7) ? "dark" : 
-                        (score > 3) ? "secondary" : "light"} 
+                        (score > 3) ? "dark" : "light"} 
                 text=   {(score > 3) ? "light" : "dark"}>
             <Card.Header as="h4" style={{textTransform: "capitalize"}}>
                 {name}
@@ -20,20 +39,20 @@ function IngredientCard(props) {
                 </Badge>
             </Card.Header>
             <Card.Body>
-                        <Card.Subtitle as="h6" className="mb-2">
-                            Human Toxicity
+                {concernList.map((concern,i) => (
+                    <div>
+                        <Card.Subtitle as="h6" className="mb-2" style={{textTransform: "capitalize"}}>
+                            {concern.cat}
                         </Card.Subtitle>
                         <Card.Text>
-                            {/* {concerns} */}
+                            {concern.text}
                         </Card.Text>
                         <hr color={ (score > 7) ? "#8a8a8a" : 
                                     ((score > 3) ? "#c2c2c2" : "f0f0f0")}/>
-                        {/* <Card.Subtitle as="h6" className="mb-2">
-                            Environment Toxicity
-                        </Card.Subtitle> */}
-                        {/* <Card.Text>
-                            {ecoToxicology}
-                        </Card.Text> */}
+                    </div>
+
+                ))}
+                <a href={substurl} className="btn btn-primary" target="_blank" rel="noopener noreferrer">Read More</a>
             </Card.Body>
         </Card>
     )
