@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import IngredientCard from "../IngredientCard"
 import imageToBase64 from "image-to-base64"
+import {Card, Container, Image} from 'react-bootstrap'
 
 class Chemicals extends Component {
   constructor(props){
@@ -158,17 +159,18 @@ class Chemicals extends Component {
     return !this.state.loading ? (
       <div className="container-fluid">
         <div  className="row" >
-          <div style={{minHeight: 320}} className="col-md-4 overflow-auto">
-            <h1 style={{marginTop:15}}>
+          <Card style={{minHeight: 320}} className="col-md-4 overflow-auto" bg="dark" text = "light">
+            <Card.Header as="h5">
                 Photo Section
-            </h1>
-            <div>
-              <h3>Upload a Picture of the Ingredients List</h3>
-              <input type="file" name="myImage" onChange={this.onImageChange} accept="image/*" /><br/><br/>
-              {this.state.image ? <img src={this.state.image} alt=""  width="100%"/>: null}
-            </div>
+            </Card.Header>  
+            <Card.Body style ={{marginTop:"40vh"}}>
+                <Image src = "https://www.iconfinder.com/data/icons/set-app-incredibles/24/Image-01-512.png" style={{filter:"invert(50%)",width:"30px", height:"auto"}} />
+                <Card.Text style={{filter:"invert(50%)"}}> Click in this box to add a photo!</Card.Text>
+            </Card.Body>
+            <input type="file" name="myImage" onChange={this.onImageChange} accept="image/*" style = {{display:"none"}}/>
+            {this.state.image ? <img src={this.state.image} alt=""  width="100%"/>: null}
             {/* <p>{this.state.ingredients?this.state.ingredients.toString():null}</p> */}
-          </div>
+          </Card>
           <div className="col-md-8 overflow-auto text-left" style={{height:"100vh"}}>
             <h1 style={{marginTop:15}}>
                 Chemicals Section
