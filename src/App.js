@@ -10,7 +10,7 @@ import Landing from "./components/layout/Landing";
 import Upload from "./components/layout/Upload";
 import PageNotFound from "./components/layout/PageNotFound";
 import Chemicals from "./components/layout/Chemicals";
-import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/dist/css/bootstrap.min.css'
 import {Card} from 'react-bootstrap'
 
 function App() {
