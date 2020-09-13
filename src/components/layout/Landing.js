@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import mockup from "../../mockup.png"
 
 // Landing/homepage
 class Landing extends Component {
@@ -12,11 +13,12 @@ class Landing extends Component {
       <div className="container-fluid poppin" >
         <div className="row align-items-center" style={{textAlign:"center",verticalAlign: "middle"}}>
             <div className="col-lg-5" style={{textAlign:"Left",padding:"10vh 5vw 0px 5vw"}}>
-              <h1 style={{fontSize:45,fontWeight:700}}>Your Toxicology Managems aokosdjosa App</h1>
-              <p>Poggers
+              <h1 style={{fontSize:45,fontWeight:700}}>Your Product Toxicity Report.</h1>
+              <p>
                 <br/>
-                <br/>
-                Start seeing your ingredients today idk be healthier
+                <b>TOX.LY</b> is your personal chemical safety-report generator. Figure out what's really in your cosmetic products, and make more informed decisions.
+                <br/><br/>
+                See your personal care products in a new light. Start buying healthier.
               </p>
               <Link
                 to="/chemicals"
@@ -31,11 +33,11 @@ class Landing extends Component {
               </Link>
             </div>
             <div className="col-lg-7 align-middle">
-              <img src="https://thumbs.dreamstime.com/b/mockup-laptop-tablet-pc-mobile-phone-blank-screen-responsive-web-design-devices-consisting-adaptive-presentation-176038032.jpg" alt="mockup" style={
+              <img src={mockup} alt="mockup" width="100%" style={
                 {marginLeft: "auto",
                 marginRight: "auto",
-                padding:"5vh 5vw 5vh 0px",
-                height: "100vh",
+                padding:"13vh 5vw 5vh 0px",
+                // height: "100vh",
                 }}/>
             </div>
           </div>

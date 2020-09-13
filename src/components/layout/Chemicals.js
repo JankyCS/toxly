@@ -97,61 +97,70 @@ class Chemicals extends Component {
       })
       //console.log("i is"+JSON.stringify(i))
       // this.setState({word:JSON.stringify(i),loading:false})
-      var allText = i.responses[0].textAnnotations[0].description
-      allText = allText.toLowerCase()
-      var i = allText.indexOf("ingr")
-      allText=allText.substring(i)
-      allText = allText.substring(allText.indexOf(" "), allText.indexOf("."))
-      allText = allText.replace("\n","")
-      allText = allText.replace("/",",")
-      allText = allText.replace(/\s*,\s*/g, ",");
-      var ingArr = allText.split(',');
-      this.setState({ingredients:ingArr})
-      var details = []
-      // requestOptions = {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({substance:"water"})
-      // }
-      // var t = await fetch("https://us-central1-toxly-289322.cloudfunctions.net/getInfo",requestOptions).then(
-      //   res=>{
-      //     const r = res.json()
-      //     return  r
-      //   }
-      // )
-      // console.log(t)
-      ingArr.forEach(async element => {
-        //console.log("poggers22")
-        requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({substance:element})
-        }
-        var e = await fetch("https://us-central1-toxly-289322.cloudfunctions.net/getInfo", requestOptions).then(
-          (res)=>{
-            if(!res.headers.get('content-type').startsWith('text')){
-              console.log("element before break"+element)
-              const r = res.json()
-              return r
-              // console.log(JSON.stringify(r))
-            }
+
+      if(i.responses!=null && i.responses[0].textAnnotations!=null){
+        
+        var allText = i.responses[0].textAnnotations[0].description
+        allText = allText.toLowerCase()
+        // var i = allText.indexOf("ingr")
+        // allText=allText.substring(i)
+        // allText = allText.substring(allText.indexOf(" "), allText.indexOf("."))
+        allText = allText.replace("\n","")
+        allText = allText.replace("/",",")
+        allText = allText.replace(/\s*,\s*/g, ",");
+        var ingArr = allText.split(',');
+        this.setState({ingredients:ingArr})
+        var details = []
+        // requestOptions = {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({substance:"water"})
+        // }
+        // var t = await fetch("https://us-central1-toxly-289322.cloudfunctions.net/getInfo",requestOptions).then(
+        //   res=>{
+        //     const r = res.json()
+        //     return  r
+        //   }
+        // )
+        // console.log(t)
+        this.setState({ingredients:[],ingredientsDetails:[]})
+        ingArr.forEach(async element => {
+          //console.log("poggers22")
+          requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({substance:element})
           }
-        )
-        if(e&&e.score>1){
-           console.log(e)
-            e.name=element
-            details.push(e)
+          var e = await fetch("https://us-central1-toxly-289322.cloudfunctions.net/getInfo", requestOptions).then(
+            (res)=>{
+              if(!res.headers.get('content-type').startsWith('text')){
+                console.log("element before break"+element)
+                const r = res.json()
+                return r
+                // console.log(JSON.stringify(r))
+              }
+            }
+          )
+          if(e&&e.score>1){
+            console.log(e)
+              e.name=element
+              details.push(e)
 
-          this.setState({ingredientsDetails:details})
-        }
-       
-      });
+            this.setState({ingredientsDetails:details})
+          }
+        
+        });
+        
+
+        //console.log(details.toStrin)
+        setTimeout(() => {
+          this.setState({loading:false})
+        }, 6000);
+      }
+      else {
+        this.setState({loading:false})
+      }
       
-
-      //console.log(details.toStrin)
-       setTimeout(() => {
-         this.setState({loading:false})
-      }, 4000);
   }
 
   _handleClick = (e) => {
@@ -167,7 +176,7 @@ class Chemicals extends Component {
           {/* <h1 style={{marginTop:15}}>
                 Photo Section
             </h1> */}
-            <div className="align-middle align-middle text-center" style={{height:"100vh",display:"flex",flexWrap: "wrap"}} onClick={this._handleClick}>
+            <div className="align-middle align-middle text-center" style={{height:"100vh",display:"flex",flexWrap: "wrap", cursor:"pointer"}} onClick={this._handleClick}>
               <div className="align-middle " style={{marginTop: "auto",marginBottom: "auto",margin:"auto", textAlign:"center"}} >
                 {!this.state.image ?<Image src = "https://www.iconfinder.com/data/icons/set-app-incredibles/24/Image-01-512.png" style={{filter:"invert(50%)",width:"30px", height:"auto"}} />:null}
                 {!this.state.image ?<Card.Text style={{filter:"invert(50%)"}}> Click in this box to add a photo!</Card.Text>:null}
@@ -178,14 +187,15 @@ class Chemicals extends Component {
           </div>
           <div className="col-md-8 overflow-auto text-left no-gutters" style={{height:"100vh"}}>
             <Card bg="light" height="100vh" >
-            <Card.Header as = "h5">
+            <Card.Header as = "h5" className="text-center">
                 Dangerous Chemicals
             </Card.Header>
             {/* {this.state.ingredientsDetails.toString()} */}
-            {this.state.ingredientsDetails && this.state.ingredientsDetails.length>0 ? <div className="card-columns" style={{padding:"20px"}}>{this.state.ingredientsDetails.map((ingredient,i) => <IngredientCard key={i} ingredient={ingredient}/>)}</div>:
+            {this.state.ingredientsDetails && this.state.ingredientsDetails.length>0 ? <div className="card-columns mycol" style={{padding:"20px"}}>{this.state.ingredientsDetails.map((ingredient,i) => <IngredientCard key={i} ingredient={ingredient}/>)}</div>:
             <Card.Body className="align-items-center d-flex justify-content-center" height="100%" style ={{flexDirection:"column", marginTop: "auto",marginBottom: "auto",padding:"20px"}}>
               <Card.Text>
-                Add a photo of an item to find out about the possible toxic compounds in it.
+                {!(this.state.image && this.state.ingredientsDetails &&  this.state.ingredientsDetails.length<=0) ? "Add a photo of an item to find out about the possible toxic compounds in it." : "No chemicals found! "}
+                
               </Card.Text>
             </Card.Body>}
           </Card>

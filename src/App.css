@@ -10,6 +10,24 @@
   padding: 0 !important
 }
 
+@media (min-width: 0) {
+  .mycol {
+      column-count: 1 !important;
+  }
+}
+
+@media (min-width: 1000px) {
+  .mycol {
+      column-count: 2 !important;
+  }
+}
+
+@media (min-width: 1500px) {
+  .mycol {
+      column-count: 3 !important;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
