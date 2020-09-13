@@ -8,13 +8,13 @@ function IngredientCard(props) {
     let { name, score, concerns } = ingredient
 
     return (
-        <Card   bg={    (score > 3) ? "dark" : 
-                        (score > 1) ? "secondary" : "light"} 
-                text=   {(score > 2) ? "light" : "dark"}>
+        <Card   bg={    (score > 7) ? "dark" : 
+                        (score > 3) ? "secondary" : "light"} 
+                text=   {(score > 3) ? "light" : "dark"}>
             <Card.Header as="h4" style={{textTransform: "capitalize"}}>
                 {name}
-                <Badge  variant={ (score > 3) ? "danger" : 
-                                 ((score > 1) ? "warning" : "success")} 
+                <Badge  variant={ (score > 7) ? "danger" : 
+                                 ((score > 3) ? "warning" : "success")} 
                         className="float-right">
                     {score}
                 </Badge>
@@ -26,8 +26,8 @@ function IngredientCard(props) {
                         <Card.Text>
                             {/* {concerns} */}
                         </Card.Text>
-                        <hr color={ (score > 3) ? "#8a8a8a" : 
-                                    ((score > 1) ? "#c2c2c2" : "f0f0f0")}/>
+                        <hr color={ (score > 7) ? "#8a8a8a" : 
+                                    ((score > 3) ? "#c2c2c2" : "f0f0f0")}/>
                         {/* <Card.Subtitle as="h6" className="mb-2">
                             Environment Toxicity
                         </Card.Subtitle> */}
