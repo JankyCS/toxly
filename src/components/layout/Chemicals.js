@@ -170,13 +170,13 @@ class Chemicals extends Component {
             {this.state.image ? <img src={this.state.image} alt=""  width="100%"/>: null}
             {/* <p>{this.state.ingredients?this.state.ingredients.toString():null}</p> */}
           </Card>
-          <div className="col-md-8 overflow-auto text-left" style={{height:"100vh"}}>
-            <h1 style={{marginTop:15}}>
+          <Card className="col-md-8" style={{height:"100vh"}} bg="light">
+            <Card.Header style={{width:"100%"}} as = "h5">
                 Chemicals Section
-            </h1>
+            </Card.Header>
             {/* {this.state.ingredientsDetails.toString()} */}
             {this.state.ingredientsDetails && this.state.ingredientsDetails.length>0 ? <div className="card-columns">{this.state.ingredientsDetails.map((ingredient,i) => <IngredientCard key={i} ingredient={ingredient}/>)}</div>:<p>None</p>}
-          </div>
+          </Card>
         </div>
       </div>
     ): <div className="align-middle" style={{paddingTop:"40vh"}}><div className="spinner-border" role="status">
