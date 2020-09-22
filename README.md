@@ -2,6 +2,8 @@
 
 Check out our [Devpost](https://devpost.com/software/toxly)
 
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
