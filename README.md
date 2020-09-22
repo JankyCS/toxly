@@ -1,4 +1,4 @@
-## Winner, Oakhacks 2020.
+## 2nd Place, Oakhacks 2020.
 
 Check out our [Devpost](https://devpost.com/software/toxly)
 
